@@ -3,7 +3,7 @@
 // @namespace    https://github.com/Porco-Rosso/Porcoscript
 // @downloadURL  https://github.com/Porco-Rosso/Porcoscript/blob/master/porcoscript.user.js
 // @updateURL  https://github.com/Porco-Rosso/Porcoscript/blob/master/porcoscript.user.js
-// @version      0.1
+// @version      0.2
 // @author       Porco-Rosso
 // @match http://*.soundcloud.com/*
 // @match https://*.soundcloud.com/*
@@ -14,6 +14,7 @@
 // ==/UserScript==
 
 // a function that loads jQuery and calls a callback function when jQuery has finished loading
+    // Note, jQ replaces $ to avoid conflicts.
 function addJQuery(callback) {
     var script = document.createElement("script");
     script.setAttribute("src", "//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js");
@@ -25,30 +26,39 @@ function addJQuery(callback) {
     document.body.appendChild(script);
 }
 
-// Declare global variables
-window.LinkBase = "https://api.datmusic.xyz/search?q=";
-
-
 // the guts of this userscript
 
 // download function
 function apifetch(query) {
-     queryurl = 'https://test.omnipus.ga/api/search?q=' + query;
+    queryurl = 'https://test.omnipus.ga/api/search?q=' + query;
+
+    if (window.location.href.indexOf("youtube") > -1) {
+        jQ('.yt-Porcoscript-text').text('🐷 Searching...');
+    } else {
+        jQ('.sc-button:focus').text('🐷 Searching...');
+    }
+
     jQ.getJSON(queryurl, function(data) {
         //data is the JSON string
-        x = JSON.parse(data.body);
-        console.log(x.data[0]);
-        //activate download
-        jQ('<form></form>').attr('action', x.data[0].download).appendTo('body').submit().remove();
+        try {
+              APIresult = JSON.parse(data.body);
+              //console.log(x.data[0]);
+              //activate download
+              jQ('<form></form>').attr('action', APIresult.data[0].download).appendTo('body').submit().remove();
+
+        } catch (err) {
+              console.log("Caught!");
+              if (window.location.href.indexOf("youtube") > -1) {
+                jQ('.yt-Porcoscript-text').text('🐷 No Song Found');
+            } else {
+                jQ('.sc-button:focus').text('🐷 No Song Found');
+            }
+        } finally {
+            // intentionally left blank
+        }
     });
 
 }
-
-
-// $.get('https://jsonp.afeld.me/?url=https://api.datmusic.xyz/search?q=FKJ', function(data){
-//     console.log(data);
-//   });
-
 
 function main() {
     // Note, jQ replaces $ to avoid conflicts.
@@ -66,10 +76,9 @@ function main() {
         RawYtSearchTerm = RawYtSearchTerm.replace(/['"]+/g, '');
         // var LinkBase = "https://api.datmusic.xyz/search?q=";
         var YtSearchTerm = RawYtSearchTerm.trim().split(' ').join(' ');
-        var YTLink = window.LinkBase + YtSearchTerm;
 
         // Generate button
-        var YTPorcoscriptButton = jQ('<div class="yt-uix-menu "><a target="_blank" href="' + YTPorcoscriptLink + '"><button class="yt-uix-button yt-Porcoscript yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup click-cancels-autoplay yt-uix-menu-trigger yt-uix-tooltip" type="button" aria-haspopup="true" title="Search on Porcoscript" role="button" id="action-panel-overflow-button" aria-pressed="false" data-tooltip-text="Search on Porcoscript"><span class="yt-uix-button-content">Porcoscript</span></button></a></div>');
+        var YTPorcoscriptButton = jQ('<div class="yt-uix-menu "><a onclick="apifetch(\'' + YtSearchTerm + '\')"><button class="yt-uix-button yt-Porcoscript yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup click-cancels-autoplay yt-uix-menu-trigger yt-uix-tooltip" type="button" aria-haspopup="true" title="Search on Porcoscript" role="button" id="action-panel-overflow-button" aria-pressed="false" data-tooltip-text="Search on Porcoscript"><span class="yt-uix-button-content yt-Porcoscript-text">Porcoscript</span></button></a></div>');
 
         // Insert button
         var YtButtons = jQ("#watch8-secondary-actions");
