@@ -92,16 +92,16 @@ function main() {
         ////////////////////// soundcloud code /////////////////////////////////////////////////////////////////
 
         // check what type of page we are on, stream vs. song
-        if (jQ('.fullListenHero__title').length) {
+        if (jQ('.fullHero__title').length) {
 
             if (jQ('.sc-Porcoscript').length) {
                 // do nothing if we have already loaded the button on song page
                 setTimeout(main, 1000);
             } else {
                 // fetch title and artist on song page
-                var RawSongTitle = jQ(".fullListenHero__title").find(".soundTitle__title").children().text();
+                var RawSongTitle = jQ(".fullHero__title").find(".soundTitle__title").children().text();
                 RawSongTitle = RawSongTitle.replace(/['"]+/g, '');
-                var RawSongArtist = jQ(".fullListenHero__title").find(".soundTitle__username").text();
+                var RawSongArtist = jQ(".fullHero__title").find(".soundTitle__username").text();
                 RawSongArtist = RawSongArtist.replace(/['"]+/g, '');
 
                 var SongTitle = RawSongTitle.trim().split(' ').join(' ');
@@ -114,7 +114,8 @@ function main() {
                 }
 
                 // insert button on song page
-                jQ('<a onclick="apifetch(\'' + SearchTerm + '\')" "class="sc-button-more sc-Porcoscript sc-button sc-button-medium sc-button-responsive" tabindex="0" title="Search on Porcoscript">Porcoscript</a>').insertAfter(jQ(".sc-button-toolbar").find(".sc-button-toolbar>.sc-button:last-child, .sc-button-group>.sc-button:last-child"));
+                jQ('<button onclick="apifetch(\'' + SearchTerm + '\')" "class="sc-Porcoscript sc-button-more sc-button sc-button-medium sc-button-responsive" tabindex="0" aria-haspopup="true" role="button" aria-owns="dropdown-button-821" title="Search on Porcoscript">Porcoscript</button>').insertAfter(jQ(".sc-button-toolbar").find(".sc-button-toolbar>.sc-button:last-child, .sc-button-group>.sc-button:last-child"));
+
 
                 setTimeout(main, 1000);
             }
