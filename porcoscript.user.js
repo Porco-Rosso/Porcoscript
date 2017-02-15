@@ -57,7 +57,6 @@ function apifetch(query) {
             // intentionally left blank
         }
     });
-
 }
 
 function main() {
@@ -78,7 +77,7 @@ function main() {
         var YtSearchTerm = RawYtSearchTerm.trim().split(' ').join(' ');
 
         // Generate button
-        var YTPorcoscriptButton = jQ('<div class="yt-uix-menu "><a onclick="apifetch(\'' + YtSearchTerm + '\')"><button class="yt-uix-button yt-Porcoscript yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup click-cancels-autoplay yt-uix-menu-trigger yt-uix-tooltip" type="button" aria-haspopup="true" title="Search on Porcoscript" role="button" id="action-panel-overflow-button" aria-pressed="false" data-tooltip-text="Search on Porcoscript"><span class="yt-uix-button-content yt-Porcoscript-text">Porcoscript</span></button></a></div>');
+        var YTPorcoscriptButton = jQ('<div class="yt-uix-menu "><a onclick="apifetch(\'' + YtSearchTerm + '\')"><button class="yt-uix-button yt-Porcoscript Porcoscript-btn yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup click-cancels-autoplay yt-uix-menu-trigger yt-uix-tooltip" type="button" aria-haspopup="true" title="Search on Porcoscript" role="button" id="action-panel-overflow-button" aria-pressed="false" data-tooltip-text="Search on Porcoscript"><span class="yt-uix-button-content yt-Porcoscript-text">Porcoscript</span></button></a></div>');
 
         // Insert button
         var YtButtons = jQ("#watch8-secondary-actions");
@@ -108,13 +107,13 @@ function main() {
                 var SongArtist = RawSongArtist.trim().split(' ').join(' ');
 
                 if (RawSongTitle.indexOf("-") >= 0) {
-                    var SearchTerm = SongTitle
+                    var SearchTerm = SongTitle;
                 } else {
-                    var SearchTerm = SongArtist + ' - ' + SongTitle
+                    var SearchTerm = SongArtist + ' - ' + SongTitle;
                 }
 
                 // insert button on song page
-                jQ('<button onclick="apifetch(\'' + SearchTerm + '\')" "class="sc-Porcoscript sc-button-more sc-button sc-button-medium sc-button-responsive" tabindex="0" aria-haspopup="true" role="button" aria-owns="dropdown-button-821" title="Search on Porcoscript">Porcoscript</button>').insertAfter(jQ(".sc-button-toolbar").find(".sc-button-toolbar>.sc-button:last-child, .sc-button-group>.sc-button:last-child"));
+                jQ('<button onclick="apifetch(\'' + SearchTerm + '\')" "class="sc-Porcoscript Porcoscript-btn sc-button-more sc-button sc-button-medium sc-button-responsive" tabindex="0" aria-haspopup="true" role="button" aria-owns="dropdown-button-821" title="Search on Porcoscript">Porcoscript</button>').insertAfter(jQ(".sc-button-toolbar").find(".sc-button-toolbar>.sc-button:last-child, .sc-button-group>.sc-button:last-child"));
 
 
                 setTimeout(main, 1000);
@@ -131,18 +130,20 @@ function main() {
                     jQ(this).addClass("has-Porcoscript");
                     //fetch title and artist on stream
                     var RawSongTitle = jQ(this).find(".soundTitle__title").children().text();
+                    RawSongTitle = RawSongTitle.replace(/['"]+/g, '');
                     var RawSongArtist = jQ(this).find(".soundTitle__usernameText").text();
+                    RawSongArtist = RawSongArtist.replace(/['"]+/g, '');
 
                     var SongTitle = RawSongTitle.trim().split(' ').join(' ');
                     var SongArtist = RawSongArtist.trim().split(' ').join(' ');
 
                     if (RawSongTitle.indexOf("-") >= 0) {
-                        var SearchTerm = SongTitle
+                        var SearchTerm = SongTitle;
                     } else {
-                        var SearchTerm = SongArtist + ' - ' + SongTitle
+                        var SearchTerm = SongArtist + ' - ' + SongTitle;
                     }
                     // insert button for item
-                    jQ('<a onclick="apifetch(\'' + SearchTerm + '\')" class="sc-button-more sc-Porcoscript sc-button sc-button-small sc-button-responsive" tabindex="0" title="Search on Porcoscript">Porcoscript</a>').insertAfter(jQ(this).find(".sc-button-toolbar>.sc-button:last-child, .sc-button-group>.sc-button:last-child"));
+                    jQ('<a onclick="apifetch(\'' + SearchTerm + '\')" class="sc-button-more sc-Porcoscript Porcoscript-btn sc-button sc-button-small sc-button-responsive" tabindex="0" title="Search on Porcoscript">Porcoscript</a>').insertAfter(jQ(this).find(".sc-button-toolbar>.sc-button:last-child, .sc-button-group>.sc-button:last-child"));
 
 
                     //   Can't manage to get a custom image in place of the sc icons. I even made this one myself :(
