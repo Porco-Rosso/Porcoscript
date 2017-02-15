@@ -11,6 +11,7 @@
 // @match https://*.youtube.com/*
 // @description  This userscript is meant to provide integration to https://api.datmusic.xyz/ into other websites, such as soundcloud and youtube.
 // @icon https://raw.githubusercontent.com/Porco-Rosso/Porcoscript/blob/master/Logo_32x32.png
+// @grant unsafeWindow
 // ==/UserScript==
 
 // a function that loads jQuery and calls a callback function when jQuery has finished loading
@@ -26,9 +27,9 @@ function addJQuery(callback) {
     document.body.appendChild(script);
 }
 
-// the guts of this userscript
+////////////////////// the guts of this userscript/////////////////////////////
 
-// download function
+/////////////////////// download function//////////////////////////////////////
 function apifetch(query) {
     queryurl = 'https://test.omnipus.ga/api/search?q=' + query;
 
@@ -58,14 +59,18 @@ function apifetch(query) {
         }
     });
 }
+// Add apifetch function to window, so that onclick event can actually work.
+unsafeWindow.apifetch = exportFunction (apifetch, unsafeWindow);
 
+
+////////////////////// insert buttons /////////////////////////////////////////
 function main() {
     // Note, jQ replaces $ to avoid conflicts.
 
     // see if we are on youtube
     if (window.location.href.indexOf("youtube") > -1) {
 
-        ////////////////////// youtube code /////////////////////////////////////////////////////////////////
+////////////////////// youtube code ///////////////////////////////////////////
         if (jQ('.yt-Porcoscript').length) {
                 // do nothing if we have already loaded the button on song page
                 setTimeout(main, 1000);
@@ -88,7 +93,7 @@ function main() {
     } else {
       if (window.location.href.indexOf("soundcloud") > -1) {
 
-        ////////////////////// soundcloud code /////////////////////////////////////////////////////////////////
+////////////////////// soundcloud code ////////////////////////////////////////
 
         // check what type of page we are on, stream vs. song
         if (jQ('.fullHero__title').length) {
@@ -144,10 +149,6 @@ function main() {
                     }
                     // insert button for item
                     jQ('<a onclick="apifetch(\'' + SearchTerm + '\')" class="sc-button-more sc-Porcoscript Porcoscript-btn sc-button sc-button-small sc-button-responsive" tabindex="0" title="Search on Porcoscript">Porcoscript</a>').insertAfter(jQ(this).find(".sc-button-toolbar>.sc-button:last-child, .sc-button-group>.sc-button:last-child"));
-
-
-                    //   Can't manage to get a custom image in place of the sc icons. I even made this one myself :(
-                    //        jQ(".sc-button-search").css('background-image','url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiPg0KICAgIDwhLS0gR2VuZXJhdG9yOiBTa2V0Y2ggMy4yLjIgKDk5ODMpIC0gaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoIC0tPg0KICAgIDx0aXRsZT5TbGljZSAxPC90aXRsZT4NCiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4NCiAgICA8ZGVmcz48L2RlZnM+DQogICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc2tldGNoOnR5cGU9Ik1TUGFnZSI+DQogICAgICAgIDxwYXRoIGQ9Ik04LjkzNzg2NzU0LDguMjkwMjA3MDkgTDEyLjUsMTIuNSBMOC45Mzc4Njc1NCw4LjI5MDIwNzA5IEM5LjU4NzU2OCw3LjczOTkwOTA3IDEwLDYuOTE4MTE4ODYgMTAsNiBDMTAsNC4zNDMxNDU3NSA4LjY1Njg1NDI1LDMgNywzIEM1LjM0MzE0NTc1LDMgNCw0LjM0MzE0NTc1IDQsNiBDNCw3LjY1Njg1NDI1IDUuMzQzMTQ1NzUsOSA3LDkgQzcuNzM4NzM1MzksOSA4LjQxNTEwNjU2LDguNzMyOTg3MDQgOC45Mzc4Njc1NCw4LjI5MDIwNzA5IFoiIGlkPSJTaGFwZSIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiIHNrZXRjaDp0eXBlPSJNU1NoYXBlR3JvdXAiPjwvcGF0aD4NCiAgICA8L2c+DQo8L3N2Zz4=)')
                 }
             });
             // keep running the script to make sure we add buttons as content is dynamically loaded, probably not an efficient method :/
@@ -159,5 +160,4 @@ function main() {
 }
 
 // load jQuery and execute the main function
-
 window.onload = addJQuery(main);
