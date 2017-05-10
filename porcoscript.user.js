@@ -31,7 +31,7 @@ function addJQuery(callback) {
 
 /////////////////////// download function//////////////////////////////////////
 function apifetch(query) {
-    queryurl = 'https://test.omnipus.ga/api/search?q=' + query;
+    queryurl = 'https://porcoapi.omnipus.ga/api/search?q=' + query;
 
     if (window.location.href.indexOf("youtube") > -1) {
         jQ('.yt-Porcoscript-text').text('🐷 Searching...');
@@ -78,7 +78,6 @@ function main() {
         //get title
         var RawYtSearchTerm = jQ("#eow-title").text();
         RawYtSearchTerm = RawYtSearchTerm.replace(/['"]+/g, '');
-        // var LinkBase = "https://api.datmusic.xyz/search?q=";
         var YtSearchTerm = RawYtSearchTerm.trim().split(' ').join(' ');
 
         // Generate button
