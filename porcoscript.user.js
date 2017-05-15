@@ -3,7 +3,7 @@
 // @namespace    https://github.com/Porco-Rosso/Porcoscript
 // @downloadURL  https://github.com/Porco-Rosso/Porcoscript/blob/master/porcoscript.user.js
 // @updateURL  https://github.com/Porco-Rosso/Porcoscript/blob/master/porcoscript.user.js
-// @version      0.2
+// @version      0.4
 // @author       Porco-Rosso
 // @match http://*.soundcloud.com/*
 // @match https://*.soundcloud.com/*
@@ -31,7 +31,7 @@ function addJQuery(callback) {
 
 /////////////////////// download function//////////////////////////////////////
 function apifetch(query) {
-    queryurl = 'https://porcoapi.omnipus.ga/api/search?q=' + query;
+    queryurl = 'https://porcoapi.omnipus.ga/search?q=' + query;
 
     if (window.location.href.indexOf("youtube") > -1) {
         jQ('.yt-Porcoscript-text').text('🐷 Searching...');
@@ -39,13 +39,16 @@ function apifetch(query) {
         jQ('.sc-button:focus').text('🐷 Searching...');
     }
 
-    jQ.getJSON(queryurl, function(data) {
+    jQ.getJSON(queryurl, function(JSONreply) {
         //data is the JSON string
         try {
-              APIresult = JSON.parse(data.body);
+
+            //JSONreply is the JSON string
+            console.log(JSONreply.data[0].download);
+              //APIresult = JSON.parse(data.body);
               //console.log(x.data[0]);
               //activate download
-              jQ('<form></form>').attr('action', APIresult.data[0].download).appendTo('body').submit().remove();
+              jQ('<form></form>').attr('action', JSONreply.data[0].download).appendTo('body').submit().remove();
 
         } catch (err) {
               console.log("Caught!");
