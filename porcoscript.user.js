@@ -10,7 +10,7 @@
 // @match http://*.youtube.com/*
 // @match https://*.youtube.com/*
 // @description  This userscript is meant to provide integration to https://api.datmusic.xyz/ into other websites, such as soundcloud and youtube.
-// @icon https://raw.githubusercontent.com/Porco-Rosso/Porcoscript/blob/master/Logo_32x32.png
+// @icon https://raw.githubusercontent.com/Porco-Rosso/Porcoscript/master/Logo_32x32.png
 // @grant unsafeWindow
 // ==/UserScript==
 
