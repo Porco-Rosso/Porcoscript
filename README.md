@@ -25,14 +25,15 @@ Currently supports [Soundcloud](https://soundcloud.com) and [Youtube](https://ww
 ___
 
 
-<h4>Installation Instructions:</h4>
-* **Chrome**: Download the [userscript file](https://github.com/Porco-Rosso/Porcoscript/raw/master/porcoscript.user.js) (right-click, 'Save Link as'), and import it with a browser extension like [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)
+**Installation Instructions:**
+
+* **Chrome** : Download the [userscript file](https://github.com/Porco-Rosso/Porcoscript/raw/master/porcoscript.user.js) (right-click, 'Save Link as'), and import it with a browser extension like [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)
 
 
-* **Firefox**: Install [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) and then load the [userscript](https://github.com/Porco-Rosso/Porcoscript/raw/master/porcoscript.user.js)
+* **Firefox** : Install [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) and then load the [userscript](https://github.com/Porco-Rosso/Porcoscript/raw/master/porcoscript.user.js)
 
 
-* **Other browsers that supprt Userscripts (Safari, Opera, etc.)**: Browse to the [userscript](https://github.com/Porco-Rosso/Porcoscript/raw/master/porcoscript.user.js) and install the script when prompted.
+* **Other browsers that supprt Userscripts (Safari, Opera, etc.)** : Browse to the [userscript](https://github.com/Porco-Rosso/Porcoscript/raw/master/porcoscript.user.js) and install the script when prompted.
 
 ---
 <img src=/images/Porcoscript_Footer.png width=900 />
